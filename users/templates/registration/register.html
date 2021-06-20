@@ -6,7 +6,7 @@
 {% endblock header %}
 
 {% block content %}
-<form class="form" action="{% url 'users:login' %}" method="POST">
+<form class="form" action="{% url 'users:register' %}" method="POST">
   {% csrf_token %}
   <!-- Bootstraped form design -->
   {% bootstrap_form form %}
@@ -19,6 +19,7 @@
   {% endbuttons %}
 
   <!-- Go to the home page after success (inside hidden form element) -->
+  {# Django internal hidden information about the form #}
   <input type="hidden" name="next" value="{% url 'learning_logs:index' %}"/>
 </form>
 {% endblock %}
