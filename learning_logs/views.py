@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Topic, Entry
@@ -29,7 +29,7 @@ def check_user(user, user2):
 def topic(request, topic_id):
     """ Queries and returns a specified topic web page by topic_id. """
     # Get the specified Topic object (db query)
-    topic = Topic.objects.get(id=topic_id)
+    topic = get_object_or_404(Topic, id=topic_id)
 
     check_user(topic.user, request.user)
 
@@ -64,7 +64,7 @@ def new_topic(request):
 
 @login_required
 def new_entry(http_request, topic_id):
-    topic = Topic.objects.get(id=topic_id)
+    topic = get_object_or_404(Topic, id=topic_id)
     check_user(topic.user, http_request.user)
 
     if http_request.method == 'GET':
@@ -91,7 +91,7 @@ def new_entry(http_request, topic_id):
 def edit_entry(http_request, entry_id):
     """ Edits entry with the id entry_id created previously, access via topics/. """
     # Get topic from all possible entries
-    entry = Entry.objects.get(id=entry_id)
+    entry = get_object_or_404(Entry, id=entry_id)
     # Entry parent
     topic = entry.topic
 

@@ -1,4 +1,5 @@
 {% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
 
 {% block header %}
   <div class="jumbotron">
@@ -13,3 +14,26 @@
     </a>
   </div>
 {% endblock header %}
+
+{% block content %}
+  {# Grid #}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <h2>Learn at your pace</h2>
+        <p>With our application you can learn what ever, when ever and where ever. What is more suitable for you.</p>
+        <p><a class="btn btn-secondary" href="#">View details »</a></p>
+      </div>
+      <div class="col-sm-4">
+        <h2>Learn what you need</h2>
+        <p>We don't bind your to any technology stack and encourage you to express you creativity and imagination in developing your own unique projects.</p>
+        <p><a class="btn btn-secondary" href="#">View details »</a></p>
+      </div>
+      <div class="col-sm-4">
+        <h2>We are here to help</h2>
+        <p>If you really get stuck and need a proper advice you are welcome to contact as at any given time, we are glad to see you developing.</p>
+        <p><a class="btn btn-secondary" style="text-align: justify;" href="#">View details »</a></p>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
