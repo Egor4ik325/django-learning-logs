@@ -2,7 +2,11 @@
 {% extends "learning_logs/base.html" %}
 
 {% block header %}
-  <h1>All created topics:</h1>
+  {% if user.is_authenticated %}
+    <h1>All created topics:</h1>
+  {% else %}
+    <h1>Publicly available topics:</h1>
+  {% endif%}
 {% endblock header %}
 
 {% block content %}
@@ -10,17 +14,17 @@
   <ul>
     {% for topic in topics %}
       <li>
-        <h3>
+        <h4>
           <a href="{{ topic.id }}">{{ topic }}</a>
-        </h3>
+        </h4>
       </li>
     {% empty %}
       <li><h3>No topics have been created yet.</h3></li>
     {% endfor %}
   </ul>
 
-  <h3>
-    <a href="{% url 'learning_logs:new_topic' %}">Add new topic to the list</a>
-  </h3>
+  <p>
+  <a class="btn btn-primary" href="{% url 'learning_logs:new_topic' %}">Add new topic to the list</a>
+  </p>
 
 {% endblock content %}

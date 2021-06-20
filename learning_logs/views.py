@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.db.models import Q
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 
@@ -11,11 +12,14 @@ def index(request):
     # Responds to the request with the web page template
     return render(request, 'learning_logs/index.html')
 
-@login_required
 def topics(request):
     """ Queries data from Topic object/database and puts them into list template. """
     # All created Topic objects (from database)
-    topics = Topic.objects.filter(user=request.user).order_by('date_added')
+    if request.user.is_authenticated:
+        topics = Topic.objects.filter(Q(user=request.user) | Q(public=True)).order_by('date_added')
+    else:
+        topics = list(Topic.objects.filter(public=True).order_by('date_added'))
+
     # Data format for template
     context = {'topics': topics}
     # Put data into template and sent template back
@@ -25,13 +29,13 @@ def check_user(user, user2):
     if user != user2:
         raise Http404
 
-@login_required
 def topic(request, topic_id):
     """ Queries and returns a specified topic web page by topic_id. """
     # Get the specified Topic object (db query)
     topic = get_object_or_404(Topic, id=topic_id)
 
-    check_user(topic.user, request.user)
+    if not topic.public:
+        check_user(topic.user, request.user)
 
     # Order by date_added (descending) (db query)
     entries = topic.entry_set.order_by('-date_added')

@@ -1,12 +1,24 @@
 {% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
+
+{% block header %}
+  <h2>Register a new user<h2>
+{% endblock header %}
 
 {% block content %}
-<form action="{% url 'users:register' %}" method="POST">
+<form class="form" action="{% url 'users:login' %}" method="POST">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button name="Submit">
-    Register new user
-  </button>
-  <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
+  <!-- Bootstraped form design -->
+  {% bootstrap_form form %}
+
+  <!-- Bootstrap buttons (log in) -->
+  {% buttons %}
+    <button class="btn btn-primary" name="submit">
+      Register
+    </button>
+  {% endbuttons %}
+
+  <!-- Go to the home page after success (inside hidden form element) -->
+  <input type="hidden" name="next" value="{% url 'learning_logs:index' %}"/>
 </form>
 {% endblock %}
