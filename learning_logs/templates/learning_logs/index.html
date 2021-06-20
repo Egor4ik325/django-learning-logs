@@ -1,0 +1,15 @@
+{% extends "learning_logs/base.html" %}
+
+{% block header %}
+  <div class="jumbotron">
+    <h1 class="display-3">Keep your learning.</h1>
+
+    <p class="lead">
+    Learning Log Django web application helps you keep track of your learning. You can create own topics and add entries to them! Everything in order for you to <b>learn better</b> and what you really need!
+    </p>
+
+    <a role="button" class="btn btn-lg btn-primary" href="{% url 'users:register'%}">
+      Register now &raquo;
+    </a>
+  </div>
+{% endblock header %}
