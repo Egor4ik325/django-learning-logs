@@ -51,7 +51,7 @@ class TopicRetrieveTests(TestCase):
         self.first_private = Topic.objects.filter(public=False).first()
 
     def test_read_public_existing_topic_unauthenticated(self):
-        url = reverse("learning_logs:topic", kwargs={"topic_id": 1})
+        url = reverse("learning_logs:topic", kwargs={"topic_id": self.test_entries_topic.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
