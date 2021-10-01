@@ -92,6 +92,19 @@ DATABASES = {
     }
 }
 
+# GitHub Actions database configuration
+if os.environ.get('CI'):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "ci",
+            "USER": "ci",
+            "PASSWORD": "ci",
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+        }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -138,7 +151,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/users/login/'
 
+# Production settings
 import django_heroku
+
 django_heroku.settings(locals())
 
 if os.environ.get('DEBUG') == 'TRUE':
